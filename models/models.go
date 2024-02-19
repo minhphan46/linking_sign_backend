@@ -1,7 +1,7 @@
 package models
 
 type Topic struct {
-	ID                  int    `json:"id"`
+	ID                  string `json:"id"`
 	TopicName           string `json:"topic_name"`
 	TopicImage          string `json:"topic_image"`
 	NumberLearnedLesson int    `json:"number_learned_lesson"`
@@ -12,7 +12,7 @@ type Topic struct {
 // state: "learning", "learned", "not learning"
 
 type Word struct {
-	ID        int    `json:"id"`
+	ID        string `json:"id"`
 	TopicID   int    `json:"topic_id"`
 	WordName  string `json:"word_name"`
 	Example1  string `json:"example1"`

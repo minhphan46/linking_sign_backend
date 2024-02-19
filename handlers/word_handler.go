@@ -7,7 +7,7 @@ import (
 	"net/http" // used to access the request and response object of the api
 
 	// used to read the environment variable
-	"strconv" // package used to covert string into int type
+	// package used to covert string into int type
 
 	"github.com/gorilla/mux" // used to get the params from the route
 
@@ -50,14 +50,16 @@ func GetWord(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 
 	// convert the id type from string to int
-	id, err := strconv.Atoi(params["id"])
+	// id, err := strconv.Atoi(params["id"])
 
-	if err != nil {
-		log.Fatalf("Unable to convert the string into int.  %v", err)
-	}
+	// if err != nil {
+	// 	log.Fatalf("Unable to convert the string into int.  %v", err)
+	// }
+
+	id := params["id"]
 
 	// call the getword function with word id to retrieve a single word
-	word, err := repositories.GetWord(int64(id))
+	word, err := repositories.GetWord(id)
 
 	if err != nil {
 		log.Fatalf("Unable to get word. %v", err)
@@ -102,29 +104,31 @@ func UpdateWord(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 
 	// convert the id type from string to int
-	id, err := strconv.Atoi(params["id"])
+	// id, err := strconv.Atoi(params["id"])
 
-	if err != nil {
-		log.Fatalf("Unable to convert the string into int.  %v", err)
-	}
+	// if err != nil {
+	// 	log.Fatalf("Unable to convert the string into int.  %v", err)
+	// }
+
+	id := params["id"]
 
 	// create an empty word of type models.word
 	var word models.Word
 
 	// decode the json request to word
-	err = json.NewDecoder(r.Body).Decode(&word)
+	err := json.NewDecoder(r.Body).Decode(&word)
 
 	if err != nil {
 		log.Fatalf("Unable to decode the request body.  %v", err)
 	}
 
 	// call update word to update the word
-	updatedRows := repositories.UpdateWord(int64(id), word)
+	updatedRows := repositories.UpdateWord(id, word)
 
 	// format the message string
 	msg := fmt.Sprintf("word updated successfully. Total rows/record affected %v", updatedRows)
 
-	word.ID = int(id)
+	word.ID = id
 
 	// format the response message
 	res := utils.Response{
@@ -143,14 +147,16 @@ func DeleteWord(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 
 	// convert the id in string to int
-	id, err := strconv.Atoi(params["id"])
+	// id, err := strconv.Atoi(params["id"])
 
-	if err != nil {
-		log.Fatalf("Unable to convert the string into int.  %v", err)
-	}
+	// if err != nil {
+	// 	log.Fatalf("Unable to convert the string into int.  %v", err)
+	// }
+
+	id := params["id"]
 
 	// call the deleteword, convert the int to int64
-	deletedRows := repositories.DeleteWord(int64(id))
+	deletedRows := repositories.DeleteWord(id)
 
 	// format the message string
 	msg := fmt.Sprintf("word delete successfully. Total rows/record affected %v", deletedRows)

@@ -7,7 +7,7 @@ import (
 	"net/http" // used to access the request and response object of the api
 
 	// used to read the environment variable
-	"strconv" // package used to covert string into int type
+	// package used to covert string into int type
 
 	"linkingsign/models"       // models package where the models are defined
 	"linkingsign/repositories" // package where all the db operations are defined
@@ -49,14 +49,16 @@ func GetTopic(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 
 	// convert the id type from string to int
-	id, err := strconv.Atoi(params["id"])
+	// id, err := strconv.Atoi(params["id"])
 
-	if err != nil {
-		log.Fatalf("Unable to convert the string into int.  %v", err)
-	}
+	// if err != nil {
+	// 	log.Fatalf("Unable to convert the string into int.  %v", err)
+	// }
+
+	id := params["id"]
 
 	// call the gettopic function with topic id to retrieve a single topic
-	topic, err := repositories.GetTopic(int64(id))
+	topic, err := repositories.GetTopic(id)
 
 	if err != nil {
 		log.Fatalf("Unable to get topic. %v", err)
@@ -101,29 +103,31 @@ func UpdateTopic(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 
 	// convert the id type from string to int
-	id, err := strconv.Atoi(params["id"])
+	// id, err := strconv.Atoi(params["id"])
 
-	if err != nil {
-		log.Fatalf("Unable to convert the string into int.  %v", err)
-	}
+	// if err != nil {
+	// 	log.Fatalf("Unable to convert the string into int.  %v", err)
+	// }
+
+	id := params["id"]
 
 	// create an empty topic of type models.topic
 	var topic models.Topic
 
 	// decode the json request to topic
-	err = json.NewDecoder(r.Body).Decode(&topic)
+	err := json.NewDecoder(r.Body).Decode(&topic)
 
 	if err != nil {
 		log.Fatalf("Unable to decode the request body.  %v", err)
 	}
 
 	// call update topic to update the topic
-	updatedRows := repositories.UpdateTopic(int64(id), topic)
+	updatedRows := repositories.UpdateTopic(id, topic)
 
 	// format the message string
 	msg := fmt.Sprintf("topic updated successfully. Total rows/record affected %v", updatedRows)
 
-	topic.ID = int(id)
+	topic.ID = id
 
 	// format the response message
 	res := utils.Response{
@@ -142,14 +146,16 @@ func DeleteTopic(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 
 	// convert the id in string to int
-	id, err := strconv.Atoi(params["id"])
+	// id, err := strconv.Atoi(params["id"])
 
-	if err != nil {
-		log.Fatalf("Unable to convert the string into int.  %v", err)
-	}
+	// if err != nil {
+	// 	log.Fatalf("Unable to convert the string into int.  %v", err)
+	// }
+
+	id := params["id"]
 
 	// call the deletetopic, convert the int to int64
-	deletedRows := repositories.DeleteTopic(int64(id))
+	deletedRows := repositories.DeleteTopic(id)
 
 	// format the message string
 	msg := fmt.Sprintf("topic delete successfully. Total rows/record affected %v", deletedRows)

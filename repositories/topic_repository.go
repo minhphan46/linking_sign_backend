@@ -15,7 +15,7 @@ func InsertTopic(topic models.Topic) models.Topic {
 	defer db.Close()
 	sqlStatement := `INSERT INTO topics (topic_name, topic_image, number_learned_lesson, total_lesson, state) VALUES ($1, $2, $3, $4, $5) RETURNING id`
 
-	var id int64
+	var id string
 
 	err := db.QueryRow(sqlStatement, topic.TopicName, topic.TopicImage, topic.NumberLearnedLesson, topic.TotalLesson, topic.State).Scan(&id)
 
@@ -23,14 +23,14 @@ func InsertTopic(topic models.Topic) models.Topic {
 		log.Fatalf("Unable to execute the query. %v", err)
 	}
 
-	topic.ID = int(id)
+	topic.ID = id
 
 	fmt.Printf("Inserted a single record %v", id)
 	return topic
 }
 
 // get one topic from the DB by its topicid
-func GetTopic(id int64) (models.Topic, error) {
+func GetTopic(id string) (models.Topic, error) {
 	// create the postgres db connection
 	db := database.CreateConnection()
 
@@ -107,7 +107,7 @@ func GetAllTopics() ([]models.Topic, error) {
 }
 
 // update topic in the DB
-func UpdateTopic(id int64, topic models.Topic) int64 {
+func UpdateTopic(id string, topic models.Topic) int64 {
 
 	// create the postgres db connection
 	db := database.CreateConnection()
@@ -138,7 +138,7 @@ func UpdateTopic(id int64, topic models.Topic) int64 {
 }
 
 // delete topic in the DB
-func DeleteTopic(id int64) int64 {
+func DeleteTopic(id string) int64 {
 
 	// create the postgres db connection
 	db := database.CreateConnection()

@@ -14,7 +14,7 @@ func InsertWord(word models.Word) models.Word {
 	defer db.Close()
 	sqlStatement := `INSERT INTO words (topic_id, word_name, example1, example2, video, is_learned) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id`
 
-	var id int64
+	var id string
 
 	err := db.QueryRow(sqlStatement, word.TopicID, word.WordName, word.Example1, word.Example2, word.Video, word.IsLearned).Scan(&id)
 
@@ -22,14 +22,14 @@ func InsertWord(word models.Word) models.Word {
 		log.Fatalf("Unable to execute the query. %v", err)
 	}
 
-	word.ID = int(id)
+	word.ID = id
 
 	fmt.Printf("Inserted a single record %v", id)
 	return word
 }
 
 // get one word from the DB by its wordid
-func GetWord(id int64) (models.Word, error) {
+func GetWord(id string) (models.Word, error) {
 	// create the postgres db connection
 	db := database.CreateConnection()
 
@@ -106,7 +106,7 @@ func GetAllWords() ([]models.Word, error) {
 }
 
 // update word in the DB
-func UpdateWord(id int64, word models.Word) int64 {
+func UpdateWord(id string, word models.Word) int64 {
 
 	// create the postgres db connection
 	db := database.CreateConnection()
@@ -137,7 +137,7 @@ func UpdateWord(id int64, word models.Word) int64 {
 }
 
 // delete word in the DB
-func DeleteWord(id int64) int64 {
+func DeleteWord(id string) int64 {
 
 	// create the postgres db connection
 	db := database.CreateConnection()
