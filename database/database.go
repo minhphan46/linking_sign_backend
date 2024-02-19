@@ -12,6 +12,8 @@ import (
 
 func CreateConnection() *sql.DB {
 	// load .env file
+	fmt.Println("Loading .env file...")
+
 	err := godotenv.Load(".env")
 
 	if err != nil {
