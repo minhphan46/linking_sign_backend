@@ -30,7 +30,7 @@ func UploadFile(w http.ResponseWriter, r *http.Request) {
 	// a particular naming pattern
 	var tail = handler.Filename[len(handler.Filename)-4:]
 	var nameFile = "upload-*" + tail
-	tempFile, err := ioutil.TempFile("temp-images", nameFile)
+	tempFile, err := ioutil.TempFile("temp-files", nameFile)
 	if err != nil {
 		fmt.Println(err)
 	}

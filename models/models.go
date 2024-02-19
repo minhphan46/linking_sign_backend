@@ -9,6 +9,8 @@ type Topic struct {
 	State               string `json:"state"`
 }
 
+// state: "learning", "learned", "not learning"
+
 type Word struct {
 	ID        int    `json:"id"`
 	TopicID   int    `json:"topic_id"`
