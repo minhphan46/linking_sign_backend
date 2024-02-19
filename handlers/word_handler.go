@@ -18,8 +18,6 @@ import (
 
 // Createword create a word in the postgres db
 func CreateWord(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("CreateWord")
-
 	// create an empty word of type models.word
 	var word models.Word
 
@@ -33,12 +31,12 @@ func CreateWord(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// call insert word function and pass the word
-	insertID := repositories.InsertWord(word)
+	insertWord := repositories.InsertWord(word)
 
 	// format a response object
 	res := database.Response{
 		Message: "word created successfully",
-		Data:    insertID,
+		Data:    insertWord,
 	}
 
 	// send the response
@@ -64,8 +62,14 @@ func GetWord(w http.ResponseWriter, r *http.Request) {
 		log.Fatalf("Unable to get word. %v", err)
 	}
 
+	// format a response object
+	res := database.Response{
+		Message: "Get single word successfully",
+		Data:    word,
+	}
+
 	// send the response
-	json.NewEncoder(w).Encode(word)
+	json.NewEncoder(w).Encode(res)
 }
 
 // GetAllword will return all the words
@@ -80,8 +84,14 @@ func GetAllWord(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Println("Get all words")
 
+	// format a response object
+	res := database.Response{
+		Message: "Get all words successfully",
+		Data:    words,
+	}
+
 	// send all the words as response
-	json.NewEncoder(w).Encode(words)
+	json.NewEncoder(w).Encode(res)
 }
 
 // Updateword update word's detail in the postgres db
@@ -113,10 +123,12 @@ func UpdateWord(w http.ResponseWriter, r *http.Request) {
 	// format the message string
 	msg := fmt.Sprintf("word updated successfully. Total rows/record affected %v", updatedRows)
 
+	word.ID = int(id)
+
 	// format the response message
 	res := database.Response{
 		Message: msg,
-		Data:    updatedRows,
+		Data:    word,
 	}
 
 	// send the response
@@ -140,7 +152,7 @@ func DeleteWord(w http.ResponseWriter, r *http.Request) {
 	deletedRows := repositories.DeleteWord(int64(id))
 
 	// format the message string
-	msg := fmt.Sprintf("word updated successfully. Total rows/record affected %v", deletedRows)
+	msg := fmt.Sprintf("word delete successfully. Total rows/record affected %v", deletedRows)
 
 	// format the reponse message
 	res := database.Response{

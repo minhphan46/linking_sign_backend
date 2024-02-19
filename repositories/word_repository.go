@@ -9,7 +9,7 @@ import (
 )
 
 // insert one word in the DB
-func InsertWord(word models.Word) int64 {
+func InsertWord(word models.Word) models.Word {
 	db := database.CreateConnection()
 	defer db.Close()
 	sqlStatement := `INSERT INTO words (topic_id, word_name, example1, example2, video, is_learned) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id`
@@ -22,8 +22,10 @@ func InsertWord(word models.Word) int64 {
 		log.Fatalf("Unable to execute the query. %v", err)
 	}
 
+	word.ID = int(id)
+
 	fmt.Printf("Inserted a single record %v", id)
-	return id
+	return word
 }
 
 // get one word from the DB by its wordid

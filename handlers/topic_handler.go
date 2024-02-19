@@ -31,12 +31,12 @@ func CreateTopic(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// call insert topic function and pass the topic
-	insertID := repositories.InsertTopic(topic)
+	insertTopic := repositories.InsertTopic(topic)
 
 	// format a response object
 	res := database.Response{
 		Message: "Topic created successfully",
-		Data:    insertID,
+		Data:    insertTopic,
 	}
 
 	// send the response
@@ -86,7 +86,7 @@ func GetAllTopic(w http.ResponseWriter, r *http.Request) {
 
 	// format a response object
 	res := database.Response{
-		Message: "Get all topic successfully",
+		Message: "Get all topics successfully",
 		Data:    topics,
 	}
 
@@ -123,10 +123,12 @@ func UpdateTopic(w http.ResponseWriter, r *http.Request) {
 	// format the message string
 	msg := fmt.Sprintf("topic updated successfully. Total rows/record affected %v", updatedRows)
 
+	topic.ID = int(id)
+
 	// format the response message
 	res := database.Response{
 		Message: msg,
-		Data:    updatedRows,
+		Data:    topic,
 	}
 
 	// send the response
@@ -150,7 +152,7 @@ func DeleteTopic(w http.ResponseWriter, r *http.Request) {
 	deletedRows := repositories.DeleteTopic(int64(id))
 
 	// format the message string
-	msg := fmt.Sprintf("topic updated successfully. Total rows/record affected %v", deletedRows)
+	msg := fmt.Sprintf("topic delete successfully. Total rows/record affected %v", deletedRows)
 
 	// format the reponse message
 	res := database.Response{
