@@ -1,6 +1,7 @@
 package router
 
 import (
+	"io"
 	"linkingsign/handlers"
 	"linkingsign/services"
 	"net/http"
@@ -17,11 +18,20 @@ func Router() *mux.Router {
 	version := "v1"
 	baseUrl = baseUrl + "/" + version
 
+	HomeRouter(router, baseUrl)
 	TopicRouter(router, baseUrl)
 	WordRouter(router, baseUrl)
 	UploadRouter(router, baseUrl)
 
 	return router
+}
+
+func HomeRouter(router *mux.Router, baseUrl string) {
+	router.HandleFunc(baseUrl, BaseRouter).Methods(http.MethodGet)
+}
+
+func BaseRouter(w http.ResponseWriter, r *http.Request) {
+	io.WriteString(w, "Welcome to LinkingSign API")
 }
 
 func TopicRouter(router *mux.Router, baseUrl string) {
