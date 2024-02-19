@@ -74,7 +74,7 @@ func UploadCloud(w http.ResponseWriter, r *http.Request) {
 
 	// Initialize Cloudinary configuration
 	// load .env file
-	errEnv := godotenv.Load(".env")
+	errEnv := godotenv.Load()
 
 	if errEnv != nil {
 		log.Fatalf("Error loading .env file")
