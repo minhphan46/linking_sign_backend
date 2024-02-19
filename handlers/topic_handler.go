@@ -6,9 +6,6 @@ import (
 	"log"
 	"net/http" // used to access the request and response object of the api
 
-	// used to read the environment variable
-	// package used to covert string into int type
-
 	"linkingsign/models"       // models package where the models are defined
 	"linkingsign/repositories" // package where all the db operations are defined
 	"linkingsign/utils"        // utility package to format the response
@@ -47,13 +44,6 @@ func CreateTopic(w http.ResponseWriter, r *http.Request) {
 func GetTopic(w http.ResponseWriter, r *http.Request) {
 	// get the topicid from the request params, key is "id"
 	params := mux.Vars(r)
-
-	// convert the id type from string to int
-	// id, err := strconv.Atoi(params["id"])
-
-	// if err != nil {
-	// 	log.Fatalf("Unable to convert the string into int.  %v", err)
-	// }
 
 	id := params["id"]
 
@@ -102,13 +92,6 @@ func UpdateTopic(w http.ResponseWriter, r *http.Request) {
 	// get the topicid from the request params, key is "id"
 	params := mux.Vars(r)
 
-	// convert the id type from string to int
-	// id, err := strconv.Atoi(params["id"])
-
-	// if err != nil {
-	// 	log.Fatalf("Unable to convert the string into int.  %v", err)
-	// }
-
 	id := params["id"]
 
 	// create an empty topic of type models.topic
@@ -144,13 +127,6 @@ func DeleteTopic(w http.ResponseWriter, r *http.Request) {
 
 	// get the topicid from the request params, key is "id"
 	params := mux.Vars(r)
-
-	// convert the id in string to int
-	// id, err := strconv.Atoi(params["id"])
-
-	// if err != nil {
-	// 	log.Fatalf("Unable to convert the string into int.  %v", err)
-	// }
 
 	id := params["id"]
 

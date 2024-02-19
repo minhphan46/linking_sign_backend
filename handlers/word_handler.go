@@ -6,9 +6,6 @@ import (
 	"log"
 	"net/http" // used to access the request and response object of the api
 
-	// used to read the environment variable
-	// package used to covert string into int type
-
 	"github.com/gorilla/mux" // used to get the params from the route
 
 	// package where the db connection is created
@@ -48,13 +45,6 @@ func CreateWord(w http.ResponseWriter, r *http.Request) {
 func GetWord(w http.ResponseWriter, r *http.Request) {
 	// get the wordid from the request params, key is "id"
 	params := mux.Vars(r)
-
-	// convert the id type from string to int
-	// id, err := strconv.Atoi(params["id"])
-
-	// if err != nil {
-	// 	log.Fatalf("Unable to convert the string into int.  %v", err)
-	// }
 
 	id := params["id"]
 
@@ -103,13 +93,6 @@ func UpdateWord(w http.ResponseWriter, r *http.Request) {
 	// get the wordid from the request params, key is "id"
 	params := mux.Vars(r)
 
-	// convert the id type from string to int
-	// id, err := strconv.Atoi(params["id"])
-
-	// if err != nil {
-	// 	log.Fatalf("Unable to convert the string into int.  %v", err)
-	// }
-
 	id := params["id"]
 
 	// create an empty word of type models.word
@@ -145,13 +128,6 @@ func DeleteWord(w http.ResponseWriter, r *http.Request) {
 
 	// get the wordid from the request params, key is "id"
 	params := mux.Vars(r)
-
-	// convert the id in string to int
-	// id, err := strconv.Atoi(params["id"])
-
-	// if err != nil {
-	// 	log.Fatalf("Unable to convert the string into int.  %v", err)
-	// }
 
 	id := params["id"]
 

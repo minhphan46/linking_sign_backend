@@ -13,7 +13,7 @@ type Topic struct {
 
 type Word struct {
 	ID        string `json:"id"`
-	TopicID   int    `json:"topic_id"`
+	TopicID   string `json:"topic_id"`
 	WordName  string `json:"word_name"`
 	Example1  string `json:"example1"`
 	Example2  string `json:"example2"`
