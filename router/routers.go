@@ -47,5 +47,5 @@ func WordRouter(router *mux.Router, baseUrl string) {
 func UploadRouter(router *mux.Router, baseUrl string) {
 	uploadURL := baseUrl + "/upload"
 	uploadRouter := router.PathPrefix(uploadURL).Subrouter()
-	uploadRouter.HandleFunc("", services.UploadFile).Methods(http.MethodPost)
+	uploadRouter.HandleFunc("", services.UploadCloud).Methods(http.MethodPost)
 }

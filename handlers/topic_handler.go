@@ -9,11 +9,11 @@ import (
 	// used to read the environment variable
 	"strconv" // package used to covert string into int type
 
-	"github.com/gorilla/mux" // used to get the params from the route
-
-	"linkingsign/database"     // package where the db connection is created
 	"linkingsign/models"       // models package where the models are defined
 	"linkingsign/repositories" // package where all the db operations are defined
+	"linkingsign/utils"        // utility package to format the response
+
+	"github.com/gorilla/mux" // used to get the params from the route
 )
 
 // CreateTopic create a topic in the postgres db
@@ -34,7 +34,7 @@ func CreateTopic(w http.ResponseWriter, r *http.Request) {
 	insertTopic := repositories.InsertTopic(topic)
 
 	// format a response object
-	res := database.Response{
+	res := utils.Response{
 		Message: "Topic created successfully",
 		Data:    insertTopic,
 	}
@@ -63,7 +63,7 @@ func GetTopic(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// format a response object
-	res := database.Response{
+	res := utils.Response{
 		Message: "Get single topic successfully",
 		Data:    topic,
 	}
@@ -85,7 +85,7 @@ func GetAllTopic(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Get all topics")
 
 	// format a response object
-	res := database.Response{
+	res := utils.Response{
 		Message: "Get all topics successfully",
 		Data:    topics,
 	}
@@ -126,7 +126,7 @@ func UpdateTopic(w http.ResponseWriter, r *http.Request) {
 	topic.ID = int(id)
 
 	// format the response message
-	res := database.Response{
+	res := utils.Response{
 		Message: msg,
 		Data:    topic,
 	}
@@ -155,7 +155,7 @@ func DeleteTopic(w http.ResponseWriter, r *http.Request) {
 	msg := fmt.Sprintf("topic delete successfully. Total rows/record affected %v", deletedRows)
 
 	// format the reponse message
-	res := database.Response{
+	res := utils.Response{
 		Message: msg,
 		Data:    deletedRows,
 	}

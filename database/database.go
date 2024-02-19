@@ -10,11 +10,6 @@ import (
 	_ "github.com/lib/pq" // postgres golang driver
 )
 
-type Response struct {
-	Message string      `json:"message,omitempty"`
-	Data    interface{} `json:"data,omitempty"`
-}
-
 func CreateConnection() *sql.DB {
 	// load .env file
 	err := godotenv.Load(".env")

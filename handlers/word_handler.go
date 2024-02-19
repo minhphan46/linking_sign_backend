@@ -11,9 +11,10 @@ import (
 
 	"github.com/gorilla/mux" // used to get the params from the route
 
-	"linkingsign/database"     // package where the db connection is created
+	// package where the db connection is created
 	"linkingsign/models"       // models package where the models are defined
 	"linkingsign/repositories" // package where all the db operations are defined
+	"linkingsign/utils"        // utility package to format the response
 )
 
 // Createword create a word in the postgres db
@@ -34,7 +35,7 @@ func CreateWord(w http.ResponseWriter, r *http.Request) {
 	insertWord := repositories.InsertWord(word)
 
 	// format a response object
-	res := database.Response{
+	res := utils.Response{
 		Message: "word created successfully",
 		Data:    insertWord,
 	}
@@ -63,7 +64,7 @@ func GetWord(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// format a response object
-	res := database.Response{
+	res := utils.Response{
 		Message: "Get single word successfully",
 		Data:    word,
 	}
@@ -85,7 +86,7 @@ func GetAllWord(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Get all words")
 
 	// format a response object
-	res := database.Response{
+	res := utils.Response{
 		Message: "Get all words successfully",
 		Data:    words,
 	}
@@ -126,7 +127,7 @@ func UpdateWord(w http.ResponseWriter, r *http.Request) {
 	word.ID = int(id)
 
 	// format the response message
-	res := database.Response{
+	res := utils.Response{
 		Message: msg,
 		Data:    word,
 	}
@@ -155,7 +156,7 @@ func DeleteWord(w http.ResponseWriter, r *http.Request) {
 	msg := fmt.Sprintf("word delete successfully. Total rows/record affected %v", deletedRows)
 
 	// format the reponse message
-	res := database.Response{
+	res := utils.Response{
 		Message: msg,
 		Data:    deletedRows,
 	}
