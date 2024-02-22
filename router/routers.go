@@ -47,6 +47,7 @@ func TopicRouter(router *mux.Router, baseUrl string) {
 func WordRouter(router *mux.Router, baseUrl string) {
 	wordURL := baseUrl + "/word"
 	wordRouter := router.PathPrefix(wordURL).Subrouter()
+	wordRouter.Path("").Queries("topic_id", "{topic_id}").HandlerFunc(handlers.GetAllWordByTopicId).Methods(http.MethodGet)
 	wordRouter.HandleFunc("", handlers.GetAllWord).Methods(http.MethodGet)
 	wordRouter.HandleFunc("/{id}", handlers.GetWord).Methods(http.MethodGet)
 	wordRouter.HandleFunc("", handlers.CreateWord).Methods(http.MethodPost)

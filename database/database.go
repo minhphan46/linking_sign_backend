@@ -12,7 +12,7 @@ import (
 
 func CreateConnection() *sql.DB {
 	// load .env file
-	fmt.Println("Loading .env file...")
+	// fmt.Println("Loading .env file...")
 
 	err := godotenv.Load()
 
@@ -34,7 +34,7 @@ func CreateConnection() *sql.DB {
 		panic(err)
 	}
 
-	fmt.Println("Successfully connected!")
+	fmt.Println("Successfully connected database!")
 	// return the connection
 	return db
 }

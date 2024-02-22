@@ -6,6 +6,8 @@ import (
 	"linkingsign/database"
 	"linkingsign/models"
 	"log"
+
+	"github.com/google/uuid"
 )
 
 // insert one word in the DB
@@ -103,6 +105,53 @@ func GetAllWords() ([]models.Word, error) {
 
 	// return empty word on error
 	return words, err
+}
+
+// get one word from the DB by its wordid
+// get all words from the DB by topicId
+func GetAllWordsByTopicId(topicId string) ([]models.Word, error) {
+	// Check if topicId is a valid UUID
+	_, err := uuid.Parse(topicId)
+	if err != nil {
+		log.Fatalf("TopicId is not a valid UUID. %v", err)
+	}
+
+	// create the postgres db connection
+	db := database.CreateConnection()
+
+	// close the db connection
+	defer db.Close()
+
+	var words []models.Word
+
+	// create the select sql query
+	sqlStatement := `SELECT * FROM words WHERE topic_id = $1`
+
+	// execute the sql statement
+	rows, err := db.Query(sqlStatement, topicId)
+	if err != nil {
+		log.Fatalf("Unable to execute the query. %v", err)
+	}
+
+	// close the statement
+	defer rows.Close()
+
+	// iterate over the rows
+	for rows.Next() {
+		var word models.Word
+
+		// unmarshal the row object to word
+		err = rows.Scan(&word.ID, &word.TopicID, &word.WordName, &word.Example1, &word.Example2, &word.Video, &word.IsLearned)
+		if err != nil {
+			log.Fatalf("Unable to scan the row. %v", err)
+		}
+
+		// append the word in the words slice
+		words = append(words, word)
+	}
+
+	// return the words
+	return words, nil
 }
 
 // update word in the DB

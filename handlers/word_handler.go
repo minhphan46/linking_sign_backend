@@ -67,7 +67,6 @@ func GetWord(w http.ResponseWriter, r *http.Request) {
 
 // GetAllword will return all the words
 func GetAllWord(w http.ResponseWriter, r *http.Request) {
-
 	// get all the words in the db
 	words, err := repositories.GetAllWords()
 
@@ -76,6 +75,30 @@ func GetAllWord(w http.ResponseWriter, r *http.Request) {
 	}
 
 	fmt.Println("Get all words")
+
+	// format a response object
+	res := utils.Response{
+		Message: "Get all words successfully",
+		Data:    words,
+	}
+
+	// send all the words as response
+	json.NewEncoder(w).Encode(res)
+}
+
+func GetAllWordByTopicId(w http.ResponseWriter, r *http.Request) {
+	topicID := r.FormValue("topic_id")
+
+	fmt.Println(topicID)
+
+	// get all the words in the db
+	words, err := repositories.GetAllWordsByTopicId(topicID)
+
+	if err != nil {
+		log.Fatalf("Unable to get all word. %v", err)
+	}
+
+	fmt.Println("Get all words by topic id")
 
 	// format a response object
 	res := utils.Response{
